@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kapil Vetrivel — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111520;
+    --card: #151b28;
+    --border: #1e2840;
+    --accent: #00c8ff;
+    --accent2: #ff6b35;
+    --text: #e8edf5;
+    --muted: #6b7a99;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Blueprint grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(10,13,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 .accent { color: var(--accent); }
+  h1 .accent2 { color: var(--accent2); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+    font-weight: 400;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 3rem;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    background: var(--surface);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 1.75rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn:hover { background: var(--accent); color: var(--bg); }
+
+  .btn-ghost {
+    border-color: var(--border);
+    color: var(--muted);
+    margin-left: 1rem;
+  }
+
+  .btn-ghost:hover { background: var(--border); color: var(--text); }
+
+  /* Hero decoration */
+  .hero-deco {
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45vw;
+    height: 45vw;
+    max-width: 600px;
+    max-height: 600px;
+    opacity: 0.06;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-deco::before {
+    content: '';
+    position: absolute;
+    inset: 15%;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+  }
+
+  .hero-deco::after {
+    content: '';
+    position: absolute;
+    inset: 35%;
+    border: 1px solid var(--accent2);
+    border-radius: 50%;
+  }
+
+  /* ── SECTION ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    width: 3rem;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── TIMELINE ── */
+  #experience { background: var(--surface); }
+
+  .timeline {
+    position: relative;
+    max-width: 800px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7rem;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--border), transparent);
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .tl-item.visible { opacity: 1; transform: none; }
+
+  .tl-year {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    min-width: 4.5rem;
+    padding-top: 0.2rem;
+    text-align: right;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: calc(7rem - 4px);
+    top: 0.35rem;
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+    border-radius: 50%;
+  }
+
+  .tl-content {
+    flex: 1;
+    padding-left: 2.5rem;
+  }
+
+  .tl-org {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .tl-role {
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .tl-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s, border-color 0.2s;
+  }
+
+  .project-card.visible { opacity: 1; transform: none; }
+  .project-card:hover { border-color: var(--accent); }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-num {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--border);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.1em;
+  }
+
+  .project-title {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+    color: var(--text);
+  }
+
+  .project-org {
+    font-size: 0.75rem;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    padding: 0.25rem 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .tag.featured {
+    border-color: rgba(0,200,255,0.3);
+    color: var(--accent);
+    background: rgba(0,200,255,0.05);
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .skill-group.visible { opacity: 1; transform: none; }
+
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .skill-list li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .skill-list li::before {
+    content: '▸';
+    color: var(--accent2);
+    font-size: 0.6rem;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    text-align: center;
+    padding: 7rem 3rem;
+  }
+
+  .contact-box {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .contact-box h2 {
+    font-family: var(--mono);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .contact-box p {
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--border);
+    letter-spacing: 0.08em;
+    transition: color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--border);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-inner > * {
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .hero-inner > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-inner > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-inner > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-inner > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-inner > *:nth-child(5) { animation-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section, #hero { padding: 4rem 1.5rem; }
+    .timeline::before { left: 0; }
+    .tl-item { flex-direction: column; gap: 0.5rem; padding-left: 1.5rem; }
+    .tl-year { text-align: left; }
+    .tl-dot { left: -4px; }
+    .tl-content { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">KV_PORTFOLIO</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-deco"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Mechanical & Thermal Engineer</div>
+    <h1>Kapil<br><span class="accent">Vetrivel</span></h1>
+    <p class="hero-desc">
+      MS Candidate at Tufts University. From Formula hybrid racecars to Mercedes-Benz HV patents —
+      I design, simulate, and build systems where thermal management meets <span style="color:var(--accent2)">real-world engineering</span>.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">EV Thermal Systems</span>
+      <span class="pill">Battery Pack Design</span>
+      <span class="pill">CAD / Simulation</span>
+      <span class="pill">Product Development</span>
+      <span class="pill">6 Patents Filed</span>
+      <span class="pill">Robotics</span>
+    </div>
+    <div>
+      <a href="#projects" class="btn">View Projects</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// Career Timeline</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="section-line"></div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-year">2024–<br>Present</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-org">Tufts University</div>
+        <div class="tl-role">MS Mechanical Engineering</div>
+        <div class="tl-desc">Coursework in Robotics Studio, Customer Discovery & Solution Design, and Milestone Project courses. Active projects in robotics, wearables, and product innovation.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year">2021–<br>2025</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-org">Mercedes-Benz R&D India</div>
+        <div class="tl-role">Thermal Management Engineer — HV Powertrain</div>
+        <div class="tl-desc">Identified improvement areas in high-voltage components and filed 6 patents covering HV wiring harness cooling, battery pack thermal management, and battery energy storage system protection.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year">2020</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-org">IIT Madras Research Park</div>
+        <div class="tl-role">EV Systems Engineer</div>
+        <div class="tl-desc">Led development of scalable battery pack architecture and performed thermal management for e-motors, battery packs, and electronics using StarCCM+ and FlowTherm simulations.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-year">2016–<br>2020</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-org">Hybrutos Racing — FSAE Team</div>
+        <div class="tl-role">Design Analyst & Fabricator</div>
+        <div class="tl-desc">Designed engine subsystems, cooling systems, and wiring harness for a Formula hybrid racecar. Led vehicle CAD integration, packaging studies, and design freeze across all subsystems.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// Selected Work</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="section-line"></div>
+
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-num">01 / 2026</div>
+      <div class="project-title">IsoCabin</div>
+      <div class="project-org">Personal Project · NSF I-Corps Spark Program</div>
+      <div class="project-desc">A fast cabin pre-conditioning system addressing the problem of extreme wait times in hot-climate parked vehicles. Currently in customer discovery, targeting EV fleet operators, ride-hail, and autonomous mobility segments.</div>
+      <div class="project-tags">
+        <span class="tag featured">Startup</span>
+        <span class="tag">Thermal Systems</span>
+        <span class="tag">Customer Discovery</span>
+        <span class="tag">NSF I-Corps</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02 / 2026</div>
+      <div class="project-title">EasyDry — Fast Dryer for Wet Shoes</div>
+      <div class="project-org">Tufts University · Milestone Project Course</div>
+      <div class="project-desc">Designed a shoe drying machine that blows high-velocity warm air through custom nozzle inserts to dry shoes in under 15 minutes without material damage. Addressed cultural and usability constraints through user research.</div>
+      <div class="project-tags">
+        <span class="tag">Product Design</span>
+        <span class="tag">User Research</span>
+        <span class="tag">Fluid Mechanics</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03 / 2026</div>
+      <div class="project-title">3D-Printed Quadruped Robot</div>
+      <div class="project-org">Tufts University · ME134 Robotics Studio</div>
+      <div class="project-desc">Designed and fabricated an organic-form legged robot from concept sketches through PTC Creo CAD, structural calculations, FDM 3D printing, and gait programming. Completed simulation and physical testing.</div>
+      <div class="project-tags">
+        <span class="tag featured">Robotics</span>
+        <span class="tag">PTC Creo</span>
+        <span class="tag">3D Printing</span>
+        <span class="tag">Gait Programming</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04 / 2025</div>
+      <div class="project-title">PuffedUp! — Variable Insulation Jacket</div>
+      <div class="project-org">Tufts University · Customer Discovery & Solution Design</div>
+      <div class="project-desc">Team project developing a jacket with tunable insulation for transitional weather. Used bubble-wrap inflation mechanism to vary air-layer thickness and thermal resistance. Iterated through low and high-fidelity prototypes with 25+ user interviews.</div>
+      <div class="project-tags">
+        <span class="tag">Design Thinking</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Thermal Design</span>
+        <span class="tag">User Testing</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">05 / 2021–2025</div>
+      <div class="project-title">HV Wiring Harness & Battery Thermal Patents</div>
+      <div class="project-org">Mercedes-Benz R&D India</div>
+      <div class="project-desc">Filed 6 patents across HV charging harness cooling using recycled cabin air, oil-encapsulated HV connectors for passive terminal cooling, and vortex-tube cooling for charging inlets. Focused on passive thermal management innovations.</div>
+      <div class="project-tags">
+        <span class="tag featured">6 Patents</span>
+        <span class="tag">HV Systems</span>
+        <span class="tag">Thermal Management</span>
+        <span class="tag">EV Technology</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">06 / 2020</div>
+      <div class="project-title">Scalable Battery Pack Architecture</div>
+      <div class="project-org">IIT Madras Research Park</div>
+      <div class="project-desc">Developed and prototyped a multi-application battery pack platform with commonized casing and electronics. Built full CAD including wiring harness and performed structural and thermal simulations. Key innovation: passive thermal management enabling higher current output.</div>
+      <div class="project-tags">
+        <span class="tag">Battery Systems</span>
+        <span class="tag">CAD</span>
+        <span class="tag">FEA / Thermal Sim</span>
+        <span class="tag">Prototyping</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">07 / 2020</div>
+      <div class="project-title">E-Motor & Electronics Thermal Management</div>
+      <div class="project-org">IIT Madras Research Park</div>
+      <div class="project-desc">Defined thermal performance limits via 0D heat load calculations and 1D coolant circuit design. Performed CFD-level simulations with StarCCM+ and FlowTherm for e-motor cooling, electronics, and battery packs.</div>
+      <div class="project-tags">
+        <span class="tag">StarCCM+</span>
+        <span class="tag">FlowTherm</span>
+        <span class="tag">1D Simulation</span>
+        <span class="tag">CFD</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">08 / 2016</div>
+      <div class="project-title">Formula Hybrid Car — Engine & Packaging</div>
+      <div class="project-org">Hybrutos Racing · FSAE</div>
+      <div class="project-desc">Designed engine mounts, cooling systems, and wiring harness from first principles for a hybrid Formula racecar. Integrated full-vehicle CAD across chassis, suspension, electronics, and powertrain, and led design freeze for fail-proof assembly.</div>
+      <div class="project-tags">
+        <span class="tag">FSAE</span>
+        <span class="tag">Vehicle Packaging</span>
+        <span class="tag">Structural Optimization</span>
+        <span class="tag">Fabrication</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// Technical Competencies</div>
+  <h2 class="section-title">Skills & Tools</h2>
+  <div class="section-line"></div>
+
+  <div class="skills-grid">
+
+    <div class="skill-group">
+      <div class="skill-group-title">CAD & Design</div>
+      <ul class="skill-list">
+        <li>PTC Creo (3D CAD Modeling)</li>
+        <li>Wiring Harness Design</li>
+        <li>Structural Optimization</li>
+        <li>Vehicle Packaging & Integration</li>
+        <li>Concept Sketching</li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Simulation & Analysis</div>
+      <ul class="skill-list">
+        <li>StarCCM+ (CFD / Thermal)</li>
+        <li>FlowTherm (Electronics Cooling)</li>
+        <li>Structural FEA</li>
+        <li>0D / 1D Thermal Modeling</li>
+        <li>Sloshing & Fueling Analysis</li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Fabrication & Testing</div>
+      <ul class="skill-list">
+        <li>FDM 3D Printing (PLA)</li>
+        <li>Battery Pack Prototyping</li>
+        <li>Laser Cutting</li>
+        <li>3D Pipe Bending</li>
+        <li>Performance Testing & Validation</li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Product & Research</div>
+      <ul class="skill-list">
+        <li>Design Thinking</li>
+        <li>User Research & Interviews</li>
+        <li>Low/High-Fidelity Prototyping</li>
+        <li>Customer Discovery (NSF I-Corps)</li>
+        <li>Patent Filing (6 patents)</li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Domain Expertise</div>
+      <ul class="skill-list">
+        <li>EV Thermal & Powertrain Systems</li>
+        <li>Battery Pack Architecture</li>
+        <li>High-Voltage Components</li>
+        <li>Legged Robotics</li>
+        <li>Gait Programming</li>
+      </ul>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">Education</div>
+      <ul class="skill-list">
+        <li>MS Mechanical Eng — Tufts University</li>
+        <li>IIT Madras — Research Park</li>
+        <li>FSAE Hybrutos Racing</li>
+        <li>NSF I-Corps Spark Program</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box">
+    <div class="section-label" style="justify-content:center;display:flex">// Get In Touch</div>
+    <h2 class="section-title">Let's Connect</h2>
+    <p>Open to research collaborations, internships, and full-time roles in thermal systems, EV engineering, and product development.</p>
+    <div class="contact-links">
+      <a href="mailto:kapil.vetrivel@tufts.edu" class="contact-link">✉ kapil.vetrivel@tufts.edu</a>
+      <a href="mailto:kapil.vetrivel@outlook.com" class="contact-link">✉ outlook email</a>
+      <a href="tel:+13392410469" class="contact-link">☏ (339) 241-0469</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Kapil Vetrivel · Built with HTML/CSS · Work in Progress
+</footer>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, entry.target.dataset.delay || 0);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.tl-item, .project-card, .skill-group').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
